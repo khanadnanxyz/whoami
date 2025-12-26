@@ -86,9 +86,96 @@ header {
   color: var(--retro-black) !important;
   font-weight: 900 !important;
   text-transform: uppercase;
-  letter-spacing: -0.03em;
-  font-family: "Courier New", "Roboto Mono", monospace !important;
+  letter-spacing: -0.08em !important;
+  font-family: "Arial Black", "Helvetica", sans-serif !important;
   text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+  font-size: 3.5rem !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-align: center !important;
+}
+
+.section-header {
+  margin-bottom: 3rem !important;
+  overflow: visible !important;
+}
+
+@media (max-width: 1200px) {
+  .section-header h2,
+  .display-1,
+  .display-xl {
+    font-size: 3rem !important;
+    letter-spacing: -0.06em !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .section-header h2,
+  .display-1,
+  .display-xl {
+    font-size: 2.5rem !important;
+    letter-spacing: -0.04em !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-header h2,
+  .display-1,
+  .display-xl {
+    font-size: 2rem !important;
+    letter-spacing: -0.02em !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-header h2,
+  .display-1,
+  .display-xl {
+    font-size: 1.6rem !important;
+    letter-spacing: -0.01em !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+  
+  .section-header {
+    padding: 0 1rem !important;
+  }
+  
+  /* Fix project swiper on mobile */
+  .portfolio-Swiper .swiper-slide {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+  
+  .portfolio-Swiper .image-holder {
+    width: 100% !important;
+    height: 250px !important;
+    min-height: 250px !important;
+    overflow: hidden !important;
+  }
+  
+  .portfolio-Swiper .image-holder > div {
+    width: 100% !important;
+    height: 250px !important;
+    min-height: 250px !important;
+  }
+  
+  .portfolio-Swiper .caption {
+    padding: 0.5rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .portfolio-Swiper .title {
+    font-size: 0.8rem !important;
+  }
+  
+  .portfolio-Swiper .image-format {
+    font-size: 0.7rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
 }
 
 .section-header span {
@@ -1424,11 +1511,6 @@ width: 95%;
   box-shadow: 14px 14px 0 var(--retro-medium);
 }
 
-.denmark-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/denmark.png') center/cover no-repeat !important;
-}
-
 .country-overlay {
   position: absolute;
   top: 0;
@@ -1508,15 +1590,14 @@ width: 95%;
 }
 
 .tile-photo {
-  height: 100%;
-  background: repeating-linear-gradient(
-    -45deg,
-    #f8f8f8,
-    #f8f8f8 15px,
-    #e8e8e8 15px,
-    #e8e8e8 30px
-  );
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .tile-overlay {
@@ -1539,6 +1620,21 @@ width: 95%;
 .travel-tile:hover .tile-overlay {
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+.travel-tile .tile-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  filter: grayscale(100%) contrast(110%) brightness(0.8);
+  transition: all 0.3s ease;
+}
+
+.travel-tile:hover .tile-photo {
+  filter: grayscale(0%) contrast(100%) brightness(1);
+  transform: scale(1.05);
 }
 
 .tile-overlay .country-flag {
@@ -1589,51 +1685,44 @@ width: 95%;
 }
 
 /* Country-specific photo backgrounds */
+.denmark-photo {
+  background-image: url('images/denmark.png');
+}
+
 .bangladesh-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/bangladesh.png') center/cover no-repeat;
+  background-image: url('images/bangladesh.png');
 }
 
 .india-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/india.png') center/cover no-repeat;
+  background-image: url('images/india.png');
 }
 
 .malaysia-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/malaysia.png') center/cover no-repeat;
+  background-image: url('images/malaysia.png');
 }
 
 .nepal-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/nepal.png') center/cover no-repeat;
+  background-image: url('images/nepal.png');
 }
 
 .maldives-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/maldives.png') center/cover no-repeat;
+  background-image: url('images/maldives.png');
 }
 
 .indonesia-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/indonesia.png') center/cover no-repeat;
+  background-image: url('images/indonesia.png');
 }
 
 .thailand-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/thailand.png') center/cover no-repeat;
+  background-image: url('images/thailand.png');
 }
 
 .france-photo {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)),
-              url('images/france.jpg') center/cover no-repeat;
+  background-image: url('images/france.jpg');
 }
 
 .poland-photo {
-  background: linear-gradient(135deg, rgba(220,20,60,0.8), rgba(255,255,255,0.6)),
-              radial-gradient(circle at 50% 20%, #ffffff 0%, transparent 40%),
-              radial-gradient(circle at 25% 75%, #dc143c 0%, transparent 50%),
-              linear-gradient(180deg, #f0f0f0 0%, #dc143c 100%);
+  background-image: url('images/poland.jpg');
 }
 
 /* Travel Quote Section */
@@ -1693,9 +1782,26 @@ width: 95%;
     overflow: hidden;
   }
   
-  .travel-tags .tag {
+  .travel-tags .tag,
+  .adventure-tags .tag {
     font-size: 0.65rem;
     padding: 0.2rem 0.4rem;
+  }
+  
+  .adventure-tile,
+  .adventure-tile.large-tile,
+  .adventure-tile.extra-large-tile {
+    aspect-ratio: 4/3 !important;
+    height: auto !important;
+    margin-bottom: 1rem;
+  }
+  
+  .adventure-icon-overlay {
+    font-size: 1.5rem;
+  }
+  
+  .adventure-icon-overlay .bi {
+    font-size: 1.5rem;
   }
 }
 
@@ -1705,15 +1811,18 @@ width: 95%;
   50% { transform: translateY(-5px); }
 }
 
-.travel-tile {
+.travel-tile,
+.adventure-tile {
   animation: tileFloat 6s ease-in-out infinite;
 }
 
-.travel-tile:nth-child(2n) {
+.travel-tile:nth-child(2n),
+.adventure-tile:nth-child(2n) {
   animation-delay: -2s;
 }
 
-.travel-tile:nth-child(3n) {
+.travel-tile:nth-child(3n),
+.adventure-tile:nth-child(3n) {
   animation-delay: -4s;
 }
 
@@ -2966,14 +3075,6 @@ blockquote {
   border: 2px solid var(--retro-black) !important;
 }
 
-.france-photo {
-  background: #f5f5f5 url('images/france.jpg') center/cover no-repeat !important;
-}
-
-.poland-photo {
-  background: #f5f5f5 url('images/poland.jpg') center/cover no-repeat !important;
-}
-
 /* France and Poland - keep same aspect ratio as others */
 .france-tile,
 .poland-tile {
@@ -2996,6 +3097,9 @@ blockquote {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Courier New", monospace !important;
   color: var(--retro-black) !important;
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
 }
 
 /* Element Headers */
@@ -3010,6 +3114,148 @@ h1, h2, h3, h4, h5, h6 {
 /* Contact Form Button */
 .contact-form .btn {
   width: 100% !important;
+}
+
+/* Adventure Cards - Retro B&W (Consistent with Travel Tiles) */
+.adventure-tile {
+  position: relative;
+  border-radius: 0;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  box-shadow: 6px 6px 0 var(--retro-medium);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 3px solid var(--retro-black);
+}
+
+.adventure-tile:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 var(--retro-medium);
+}
+
+.adventure-tile.extra-large-tile {
+  aspect-ratio: 21/9;
+}
+
+.adventure-tile.large-tile {
+  aspect-ratio: 16/9;
+}
+
+.adventure-tile .tile-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: grayscale(100%) contrast(110%) brightness(0.8);
+  transition: all 0.3s ease;
+}
+
+.adventure-tile:hover .tile-photo {
+  filter: grayscale(0%) contrast(100%) brightness(1);
+  transform: scale(1.05);
+}
+
+.adventure-tile:hover .tile-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Adventure Photo Backgrounds */
+.paragliding-photo {
+  background-image: url('images/paragliding.png');
+}
+
+.sharks-photo {
+  background-image: url('images/shark.png');
+}
+
+.marathon-photo {
+  background-image: url('images/half-marathon.png');
+}
+
+.ziplining-photo {
+  background-image: url('images/ziplining.jpg');
+}
+
+.hiking-photo {
+  background-image: url('images/hike.png');
+}
+
+.parasailing-photo {
+  background-image: url('images/parasailing.jpg');
+}
+
+.adventure-tile .tile-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  color: var(--retro-white) !important;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  border-left: 6px solid var(--retro-white);
+}
+
+.adventure-icon-overlay {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--retro-white) !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.adventure-icon-overlay .bi {
+  font-size: 2rem;
+  color: var(--retro-white) !important;
+}
+
+.adventure-tile h4 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: "Courier New", monospace;
+  color: var(--retro-white) !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.adventure-tile p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  font-family: "Courier New", monospace;
+  color: var(--retro-white) !important;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+.adventure-tile .adventure-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.adventure-tile .adventure-tags .tag {
+  background: var(--retro-black);
+  color: var(--retro-white) !important;
+  padding: 0.3rem 0.75rem;
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Courier New", monospace;
+  border: 1px solid var(--retro-white);
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 /* Right Content Box */
