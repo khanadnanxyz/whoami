@@ -1,163 +1,83 @@
-(function ($) {
+(() => {
+  'use strict';
 
-  "use strict";
+  const pageContent = document.querySelector('.page-content');
+  const sectionOrder = ['home', 'approach', 'experience', 'education', 'certifications', 'adventures', 'travel', 'about', 'portfolio', 'volunteering', 'awards', 'contact'];
+  sectionOrder.forEach(id => pageContent.append(document.getElementById(id)));
 
-  // ------------------------------------------------------------------------------ //
-  // Overlay Menu Navigation
-  // ------------------------------------------------------------------------------ //
-  var overlayMenu = function () {
+  const menuButton = document.querySelector('.menu-btn');
+  const sidebar = document.querySelector('#header-nav');
+  const links = [...document.querySelectorAll('#one-page-menu .nav-link')];
+  const sections = links.map(link => document.querySelector(link.getAttribute('href')));
+  const desktop = window.matchMedia('(min-width: 992px)');
 
-    if (!$('.nav-overlay').length) {
-      return false;
-    }
-
-    var body = undefined;
-    var menu = undefined;
-    var menuItems = undefined;
-    var init = function init() {
-      body = document.querySelector('body');
-      menu = document.querySelector('.menu-btn');
-      menuItems = document.querySelectorAll('.nav__list-item');
-      applyListeners();
-    };
-    var applyListeners = function applyListeners() {
-      menu.addEventListener('click', function () {
-        return toggleClass(body, 'nav-active');
-      });
-    };
-    var toggleClass = function toggleClass(element, stringClass) {
-      if (element.classList.contains(stringClass)) element.classList.remove(stringClass); else element.classList.add(stringClass);
-    };
-    init();
+  function setMenu(open, restoreFocus = false) {
+    document.body.classList.toggle('nav-active', open);
+    menuButton.setAttribute('aria-expanded', String(open));
+    menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    if (open) links[0].focus();
+    if (restoreFocus) menuButton.focus();
   }
 
-
-  // Portfolio Slider
-  var swiper = new Swiper(".portfolio-Swiper", {
-    slidesPerView: 4,
-    spaceBetween: 30,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    breakpoints: {
-      300: {
-        slidesPerView: 2,
-      },
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 20,
-      },
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 30,
-      },
-    },
+  menuButton.addEventListener('click', () => {
+    setMenu(!document.body.classList.contains('nav-active'));
   });
 
-  // Animate Texts
-  var initTextFx = function () {
-    $('.txt-fx').each(function () {
-      var newstr = '';
-      var count = 0;
-      var delay = 100;
-      var stagger = 10;
-      var words = this.textContent.split(/\s/);
-      var arrWords = new Array();
-      
-      $.each( words, function( key, value ) {
-        newstr = '<span class="word">';
-
-        for ( var i = 0, l = value.length; i < l; i++ ) {
-          newstr += "<span class='letter' style='transition-delay:"+ ( delay + stagger * count ) +"ms;'>"+ value[ i ] +"</span>";
-          count++;
-        }
-        newstr += '</span>';
-
-        arrWords.push(newstr);
-        count++;
-      });
-
-      this.innerHTML = arrWords.join("<span class='letter' style='transition-delay:"+ delay +"ms;'>&nbsp;</span>");
-    });
-  }
-
-  // init Isotope
-  var initIsotope = function() {
-    
-    $('.grid').each(function(){
-
-      // $('.grid').imagesLoaded( function() {
-        // images have loaded
-        var $buttonGroup = $( '.button-group' );
-        var $checked = $buttonGroup.find('.is-checked');
-        var filterValue = $checked.attr('data-filter');
-  
-        var $grid = $('.grid').isotope({
-          itemSelector: '.portfolio-item',
-          // layoutMode: 'fitRows',
-          filter: filterValue
-        });
-    
-        // bind filter button click
-        $('.button-group').on( 'click', 'a', function(e) {
-          e.preventDefault();
-          filterValue = $( this ).attr('data-filter');
-          $grid.isotope({ filter: filterValue });
-        });
-    
-        // change is-checked class on buttons
-        $('.button-group').each( function( i, buttonGroup ) {
-          $buttonGroup.on( 'click', 'a', function() {
-            $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $( this ).addClass('is-checked');
-          });
-        });
-      // });
-
-    });
-  }
-
-  // init Chocolat light box
-  var initChocolat = function() {
-    Chocolat(document.querySelectorAll('.image-link'), {
-      imageSize: 'contain',
-      loop: true,
-    })
-  }
-
-  $(document).ready(function () {
-
-    overlayMenu();
-    initTextFx();
-    initChocolat();
-
-    // mobile menu
-    $('.menu-btn').click(function(e){
-      e.preventDefault();
-      $('body').toggleClass('nav-active');
-    });
-
-    // close mobile menu when a nav link is clicked
-    $('#one-page-menu .nav-link').click(function(){
-      if($('body').hasClass('nav-active')) {
-        $('body').removeClass('nav-active');
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      if (!desktop.matches) {
+        setMenu(false);
+        const destination = document.querySelector(link.getAttribute('href'));
+        destination.setAttribute('tabindex', '-1');
+        destination.focus({ preventScroll: true });
       }
     });
-
-    AOS.init({
-      duration: 1200,
-      // once: true,
-    })
-
   });
 
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && document.body.classList.contains('nav-active')) {
+      setMenu(false, true);
+    }
+  });
 
-  // window load
-  $(window).load(function () {
-    $(".preloader").fadeOut("slow");
-    initIsotope();
-  })
+  document.addEventListener('click', event => {
+    if (document.body.classList.contains('nav-active') &&
+        !sidebar.contains(event.target) && !menuButton.contains(event.target)) {
+      setMenu(false);
+    }
+  });
 
+  desktop.addEventListener('change', () => setMenu(false));
 
-})(jQuery);
+  function updateActiveSection() {
+    const threshold = window.scrollY + Math.min(180, window.innerHeight * 0.25);
+    let active = sections[0];
+    sections.forEach(section => {
+      if (section.offsetTop <= threshold) active = section;
+    });
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) {
+      active = sections[sections.length - 1];
+    }
+    links.forEach(link => {
+      const selected = link.getAttribute('href') === '#' + active.id;
+      link.classList.toggle('active', selected);
+      if (selected) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  let scheduled = false;
+  window.addEventListener('scroll', () => {
+    if (!scheduled) {
+      scheduled = true;
+      requestAnimationFrame(() => {
+        updateActiveSection();
+        scheduled = false;
+      });
+    }
+  }, { passive: true });
+  window.addEventListener('resize', updateActiveSection);
+  window.addEventListener('load', updateActiveSection);
+  document.addEventListener('toggle', updateActiveSection, true);
+  updateActiveSection();
+})();
